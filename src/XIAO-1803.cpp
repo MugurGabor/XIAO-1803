@@ -4,8 +4,10 @@
 #include "esp_camera.h"
 #include "camera_pins.h"
 
-const char* ssid = "AndroidAPD236";
-const char* password = "qhdz9766";
+// const char* ssid = "AndroidAPD236";
+// const char* password = "qhdz9766";
+const char* ssid = "ADE-G2392QG1QF";
+const char* password = "mgn-car-2210";
 
 
 struct WiFiNetwork {
@@ -158,8 +160,61 @@ void setup() {
 
   Serial.println("HTTP server started");
 }
+const char* wifiStatusToString(wl_status_t status) {
+  switch (status) {
+    case WL_IDLE_STATUS: return "IDLE";
+    case WL_NO_SSID_AVAIL: return "NO_SSID";
+    case WL_SCAN_COMPLETED: return "SCAN_DONE";
+    case WL_CONNECTED: return "CONNECTED";
+    case WL_CONNECT_FAILED: return "CONNECT_FAILED";
+    case WL_CONNECTION_LOST: return "CONNECTION_LOST";
+    case WL_DISCONNECTED: return "DISCONNECTED";
+    default: return "UNKNOWN";
+  }
+}
+
+void printSystemStatus() {
+  Serial.println();
+  Serial.println("===== SYSTEM STATUS =====");
+
+  // WiFi
+  Serial.print("WiFi status: ");
+  Serial.println(wifiStatusToString(WiFi.status()));
+
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.print("IP: ");
+    Serial.println(WiFi.localIP());
+
+    Serial.print("RSSI: ");
+    Serial.print(WiFi.RSSI());
+    Serial.println(" dBm");
+  }
+
+  // Camera test
+  camera_fb_t *fb = esp_camera_fb_get();
+  if (fb) {
+    Serial.print("Camera OK, frame size: ");
+    Serial.println(fb->len);
+    esp_camera_fb_return(fb);
+  } else {
+    Serial.println("Camera ERROR");
+  }
+
+  Serial.println("==========================");
+}
 
 void loop() {
   server.handleClient();
+
+static unsigned long lastPrint = 0;
+
+  if (millis() - lastPrint > 10000) {   // la fiecare 5 sec
+    printSystemStatus();
+    lastPrint = millis();
+  }
+
+
   delay(1);
+
+ 
 }
