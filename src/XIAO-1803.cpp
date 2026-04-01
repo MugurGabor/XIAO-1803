@@ -8,6 +8,21 @@ const char* ssid = "AndroidAPD236";
 const char* password = "qhdz9766";
 
 
+struct WiFiNetwork {
+  const char* ssid;
+  const char* password;
+  const char* mqttServer;
+};
+WiFiNetwork wifiList[] = {
+  { "SG Wi-Fi E", "sgabor95", "192.168.100.47" },
+  { "AndroidAPD236", "qhdz9766", "109.100.33.178" },
+  { "ADE-G2392QG1QF", "mgn-car-2210", "109.100.33.178" },
+  { "SG Wi-Fi P", "sgabor95", "192.168.100.47" }
+};
+
+
+
+
 WebServer server(80);
 
 static const char* STREAM_CONTENT_TYPE = "multipart/x-mixed-replace;boundary=frame";
