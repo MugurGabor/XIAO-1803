@@ -37,11 +37,6 @@ void startHttpServer();
 void stopHttpServer();
 void callback(char* topic, byte* payload, unsigned int length);
 
-// const char* ssid = "AndroidAPD236";
-// const char* password = "qhdz9766";
-// const char* ssid = "ADE-G2392QG1QF";
-// const char* password = "mgn-car-2210";
-
 
 struct WiFiNetwork {
   const char* ssid;
@@ -276,42 +271,7 @@ void startCamera() {
   Serial.println("Camera init OK");
 }
 
-// void setup() {
-//   Serial.begin(115200);
-//   delay(3000);
-//   Serial.println("Boot");
 
-//   startCamera();
-
-//   Serial.print("Connecting to WiFi: ");
-//   // Serial.println(ssid);
-
-//   // WiFi.begin(ssid, password);
-
-//   int cnt = 0;
-//   while (WiFi.status() != WL_CONNECTED && cnt < 30) {
-//     delay(500);
-//     Serial.print(".");
-//     cnt++;
-//   }
-
-//   Serial.println();
-
-//   if (WiFi.status() != WL_CONNECTED) {
-//     Serial.println("WiFi connection failed");
-//     return;
-//   }
-
-//   Serial.println("WiFi connected");
-//   Serial.print("Open: http://");
-//   Serial.println(WiFi.localIP());
-
-//   server.on("/", handle_root);
-//   server.on("/stream", HTTP_GET, handle_jpg_stream);
-//   server.begin();
-
-//   Serial.println("HTTP server started");
-// }
 
 void setup() {
   Serial.begin(115200);
@@ -343,35 +303,7 @@ const char* wifiStatusToString(wl_status_t status) {
   }
 }
 
-// void printSystemStatus() {
-//   Serial.println();
-//   Serial.println("===== SYSTEM STATUS =====");
 
-//   // WiFi
-//   Serial.print("WiFi status: ");
-//   Serial.println(wifiStatusToString(WiFi.status()));
-
-//   if (WiFi.status() == WL_CONNECTED) {
-//     Serial.print("IP: ");
-//     Serial.println(WiFi.localIP());
-
-//     Serial.print("RSSI: ");
-//     Serial.print(WiFi.RSSI());
-//     Serial.println(" dBm");
-//   }
-
-//   // Camera test
-//   camera_fb_t *fb = esp_camera_fb_get();
-//   if (fb) {
-//     Serial.print("Camera OK, frame size: ");
-//     Serial.println(fb->len);
-//     esp_camera_fb_return(fb);
-//   } else {
-//     Serial.println("Camera ERROR");
-//   }
-
-//   Serial.println("==========================");
-// }
 void printSystemStatus() {
   Serial.println();
   Serial.println("===== SYSTEM STATUS =====");
@@ -406,19 +338,7 @@ void printSystemStatus() {
   Serial.println("==========================");
 }
 
-// void loop() {
-//   server.handleClient();
 
-// static unsigned long lastPrint = 0;
-
-//   if (millis() - lastPrint > 10000) {   // la fiecare 5 sec
-//     printSystemStatus();
-//     lastPrint = millis();
-//   }
-
-//   delay(1);
- 
-// }
 void loop() {
   handleWiFiRoaming();
   handleMQTT();
